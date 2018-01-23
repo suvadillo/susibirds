@@ -3,8 +3,8 @@ var imgBird1 = new Image();
 imgBird1.src = 'images/susiBird.png';
 var imgScale = 100/161;
 
-var imgExplosion = 'images/badBird.png';
-var imgExplScale = 187/100;
+var imgExplosion = 'images/explosion01.png';
+var imgExplScale = 1;
 
 function FlyingBird(maxSpeedX,x,y){
   this.maxSpeedX = maxSpeedX;
@@ -60,7 +60,7 @@ FlyingBird.prototype.render = function(delta){
   this.posX += this.speedX/1000*delta;
   if (!this.alive) {
     imgBird1.src = imgExplosion;
-    ctx.drawImage(imgBird1, this.posX, this.posY, imgExplScale*50, 50);  
+    ctx.drawImage(imgBird1, this.posX, this.posY, imgExplScale*80, 80);  
   }
   ctx.drawImage(imgBird1, this.posX, this.posY, this.width, this.height);
 }

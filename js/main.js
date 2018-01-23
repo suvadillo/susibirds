@@ -5,6 +5,10 @@ var ctx = cv.getContext('2d');
 
 // ********* INSTANCIAR TODOS LOS OBJETOS
 
+// var imgBadBird = new Image();   
+// imgBadBird.src = 'images/badBird.png';
+// var imgBadBirdScale = 187/100;
+
 var background1 = new Background();
 
 var susiBird1 = new FlyingBird(100,250,250);
@@ -25,7 +29,7 @@ var arrRockets = [
   new Rocket(-250,325,1400)
 ];
 
-var badGuy = new BadBird(50,50,800,450);
+var badGuy = new BadBird(50,50,400,300);
 
 var myGame = new Game;
 
@@ -68,7 +72,9 @@ var render = function(){
 
   background1.render(delta);
   background1.renderScore(susiBird1.lifes,myGame.score);
-  badGuy.move(-1,-1);
+  //badGuy.move(-1,-1);
+  //ctx.drawImage(imgBadBird, 50, 50, 400, 300);
+  // badGuy.render();
 
   CheckCollision();
 

@@ -38,11 +38,13 @@ BadBird.prototype.collision = function(x,y){
   this.dead();  
 }
 
-BadBird.prototype.render = function(delta){
-  this.posY += this.speedY/1000*delta;
-  this.posX += this.speedX/1000*delta;
-  if (!this.alive) {
-    imgBird1.src = '';
-  }
+BadBird.prototype.render = function(){
+  // this.y += this.speedY/1000*delta;
+  // this.x += this.speedX/1000*delta;
+  // console.log('entra')
+  // if (!this.alive) {
+  //   imgBird1.src = '';
+  //   //console.log('badguy dead')
+  // }
   ctx.drawImage(imgBadBird, this.x, this.y, this.width, this.height);
 }
