@@ -1,9 +1,12 @@
 function Game(){
   this.score = 0;
   this.level = 1;
-  this.isGameRunning=true;
-  this.arrRockets=[];
+  this.background1;
+  this.arrRockets = [];
   this.numberOfRockets = 8;
+  this.susiBird1;
+  this.badGuy;
+  this.isGameRunning = true;
 }
 
 Game.prototype.gameOver = function() {
@@ -11,9 +14,10 @@ Game.prototype.gameOver = function() {
 }
 
 Game.prototype.startGame = function() {
-    // this.background1 = new Background();
-    // var susiBird1 = new FlyingBird(100,250,250);
-    this.createArrRockets(this.numberOfRockets);
+  this.background1 = new Background();
+  this.susiBird1 = new FlyingBird(50,250,250,0);
+  this.createArrRockets(this.numberOfRockets);
+  this.badGuy = new BadBird(10,10,60,0,0);
 }
 
 
