@@ -6,9 +6,10 @@ var imgScale = 100/161;
 var imgExplosion = 'images/explosion01.png';
 var imgExplScale = 1;
 
+// this.images = [imgBird1,2] CAMBIA ESTO!!!!!!!!
+
 function FlyingBird(maxSpeedX,x,y){
   this.maxSpeedX = maxSpeedX;
-  this.maxSpeedY = 0;
   this.posX = x;
   this.posY = y;
   this.width = 110*imgScale;
@@ -33,7 +34,6 @@ FlyingBird.prototype.moveX = function(direction){
 }
 
 FlyingBird.prototype.moveY = function(){
-  console.log("movingY");
   this.speedY = this.maxSpeedY;
 }
 
@@ -48,7 +48,7 @@ FlyingBird.prototype.dead = function(){
   // AÑADIR EFECTO DE QUE EL PAJARO DESAPARECE ???
 }
 
-FlyingBird.prototype.collision = function(x,y){
+FlyingBird.prototype.collision = function(){
   this.width = 0;
   this.height = 0; 
   this.dead();  

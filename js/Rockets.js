@@ -6,7 +6,6 @@ var scale = 75/178;
 function Rocket(speedY,x,y){
   this.posX = x;
   this.posY = y;
-  // this.globalY = 0;
   this.speedY = speedY;
   this.width = 50*scale;
   this.height = 50;
@@ -23,7 +22,6 @@ Rocket.prototype.collision = function(arr){
   for (var i = 0 ; i < arr.length; i++) {
     arr[i].stop();
   }
-  // VER SI HAY QUE AÑADIR ALGO MÁS ???
 }
 
 Rocket.prototype.render = function(delta){
@@ -31,10 +29,5 @@ Rocket.prototype.render = function(delta){
   if (this.posY < -100) {
   this.posY = 800;
   } 
-  if (this.alive) {
-    ctx.drawImage(imgRocket, this.posX, this.posY, this.width, this.height);
-  } else {
-    return;
-    //ctx.drawImage(imgRocket, this.posX, this.posY, 0, 0);
-  }
+  ctx.drawImage(imgRocket, this.posX, this.posY, this.width, this.height);
 }

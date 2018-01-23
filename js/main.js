@@ -1,56 +1,28 @@
 var fps = 60;
-
 var cv = document.getElementById('canvas');
 var ctx = cv.getContext('2d');
-
 // ********* INSTANCIAR TODOS LOS OBJETOS
-
-// var imgBadBird = new Image();   
-// imgBadBird.src = 'images/badBird.png';
-// var imgBadBirdScale = 187/100;
-
 var background1 = new Background();
-
 var susiBird1 = new FlyingBird(100,250,250);
-
-// var numRockets = Math.floor(Math.random()*2) + 2;
-
-// var arrRockets = createArrRockets(numRockets);
-
-
-var arrRockets = [
-  new Rocket(-200,175,800),
-  new Rocket(-250,250,800),
-  new Rocket(-200,400,800),
-  new Rocket(-250,100,1100),
-  new Rocket(-200,325,1100),
-  new Rocket(-250,100,1400),
-  new Rocket(-200,175,1400),
-  new Rocket(-250,325,1400)
-];
-
-var badGuy = new BadBird(50,50,400,300);
+var arrRockets  = []
+var badGuy = new BadBird(10,10,60,0);
 
 var myGame = new Game;
 
-// myGame.startGame();
-
 function CheckCollision() {
   for (var i = 0; i < arrRockets.length; i ++) {
-    // console.log("arrRockets: X: " + arrRockets[i].posX + " / Y: " + arrRockets[i].posY);
-    // console.log("susiBird: X: " + susiBird1.posX + " / Y: " + susiBird1.posY);
     if (arrRockets[i].posX < susiBird1.posX + susiBird1.width && arrRockets[i].posX + arrRockets[i].width  > susiBird1.posX &&
       arrRockets[i].posY < susiBird1.posY + susiBird1.height && arrRockets[i].posY + arrRockets[i].height > susiBird1.posY) {
       // The objects are touching
-      console.log("COLLISION");        
-      susiBird1.collision(susiBird1.posX, susiBird1.posY);
+      susiBird1.collision();
       arrRockets[i].collision(arrRockets);
       background1.stop();
-      badGuy.render(delta);
+      myGame.isGameRunning=false;
 
     } else {
       susiBird1.render(delta);
       arrRockets[i].render(delta);
+      badGuy.move(1,1);
       badGuy.render(delta);
     }
   }
@@ -60,8 +32,7 @@ function CheckCollision() {
 
 var now = Date.now();
 var delta = 0;
-
-var render = function(){
+function update(){
   then = now;
   now = Date.now();
   delta = now - then;
@@ -74,13 +45,26 @@ var render = function(){
   background1.renderScore(susiBird1.lifes,myGame.score);
   //badGuy.move(-1,-1);
   //ctx.drawImage(imgBadBird, 50, 50, 400, 300);
-  // badGuy.render();
 
-  CheckCollision();
+   CheckCollision();
 
   // LLAMAR AL RENDER DE TODOS LOS ELEMENTOS *********
+}
+function updateWhenBirdDied(){
+  setTimeout(function(){ console.log("Hello"); }, 3000);
+  ctx.clearRect(0,0,cv.width,cv.height);
+  background1.render(delta);
+}
 
 
+
+var render = function(){
+  if(myGame.isGameRunning==true){
+    update()
+  }
+  else if(myGame.isGameRunning==false){
+    updateWhenBirdDied()
+  }
   window.requestAnimationFrame(render);
 };
 window.requestAnimationFrame(render);
@@ -104,3 +88,16 @@ window.addEventListener('keydown', function(e){
 window.addEventListener('keyup', function(e){
   susiBird1.stop();
 });
+function createArrRockets(numRockets){
+  for (var i = 0; i < numRockets; i++) {
+    var x,y,z;
+    if (i % 2 === 0) {x = -200;} else {x = -250;}
+    y = (Math.floor(Math.random()*5)*75)+100;
+    z = (Math.floor(Math.random()*3)*300)+800;
+    var rocket = new Rocket(x,y,z)
+    arrRockets.push(rocket);
+  }
+}
+createArrRockets(8)
+myGame.startGame()
+console.log(myGame.arrRockets)
