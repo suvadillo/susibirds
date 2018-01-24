@@ -1,5 +1,6 @@
 function FlyingBird(maxSpeedX,x,y){
   this.maxSpeedX = maxSpeedX;
+  this.maxSpeedY = 50;
   this.posX = x;
   this.posY = y;
   this.imgs = [new Image(),new Image()];
@@ -28,8 +29,14 @@ FlyingBird.prototype.moveX = function(direction){
   }
 }
 
-FlyingBird.prototype.moveY = function(){
-  this.speedY = this.maxSpeedY;
+FlyingBird.prototype.moveY = function(direction){
+  if (this.posY < 0) {
+    this.speedY = 0;
+  } else if (this.posY > 800) {
+    this.speedY = 0;
+  } else {
+    this.speedY = this.maxSpeedY * direction;
+  }
 }
 
 FlyingBird.prototype.stop = function(){
@@ -37,31 +44,23 @@ FlyingBird.prototype.stop = function(){
   this.speedY = 0;
 }
 
-FlyingBird.prototype.dead = function(){
-  //this.alive = false;
-  this.lifes--;
-  // AÑADIR EFECTO DE QUE EL PAJARO DESAPARECE ???
-}
-
 FlyingBird.prototype.collision = function(){
-  this.width = 0;
-  this.height = 0; 
-  this.dead();  
+  this.lifes--; 
   this.renderCollision();
 }
 
-FlyingBird.prototype.renderCollision = function(delta){
-  ctx.drawImage(this.imgs[1], this.posX, this.posY,this.imgsScales[1]*this.imgsResize[1], this.imgsResize[1]);
+FlyingBird.prototype.renderCollision = function(){
+  myGame.ctx.drawImage(this.imgs[1], this.posX, this.posY,this.imgsScales[1]*this.imgsResize[1], this.imgsResize[1]);
 }
 
-FlyingBird.prototype.render = function(delta){
-  this.posY += this.speedY/1000*delta;
-  this.posX += this.speedX/1000*delta;
-  ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
+FlyingBird.prototype.render = function(){
+  this.posY += this.speedY/1000*myGame.delta;
+  this.posX += this.speedX/1000*myGame.delta;
+  myGame.ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
 }
 
 FlyingBird.prototype.revive = function() {
   //this.alive = true;
   console.log(myGame.susiBird1);
-  ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
+  myGame.ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
 }

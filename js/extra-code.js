@@ -23,16 +23,16 @@ Rocket.prototype.collision = function(){
   // VER SI HAY QUE AÑADIR ALGO MÁS ???
 }
 
-Rocket.prototype.render = function(delta){
-  this.posY += this.speedY/1000*delta;
+Rocket.prototype.render = function(myGame.delta){
+  this.posY += this.speedY/1000*myGame.delta;
   if (this.posY < -100) {
   this.posY = 800;
   } 
   if (this.alive) {
-    ctx.drawImage(imgRocket, this.posX, this.posY, this.width, this.height);
+    myGame.ctx.drawImage(imgRocket, this.posX, this.posY, this.width, this.height);
   } else {
     return;
-    //ctx.drawImage(imgRocket, this.posX, this.posY, 0, 0);
+    //myGame.ctx.drawImage(imgRocket, this.posX, this.posY, 0, 0);
   }
 }
 

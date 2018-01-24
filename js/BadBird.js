@@ -14,41 +14,41 @@ function BadBird(speed, x, y, i){
   this.directionR = true;
 }
 
-BadBird.prototype.moveD = function () {
+BadBird.prototype.move = function() {
+  if(this.directionR) this.moveR();
+  else this.moveL();
+}
+
+BadBird.prototype.moveD = function() {
   if (this.y >= 1700) this.y = 0;
-  this.y += this.speed/1000*delta;
+  this.y += this.speed/1000*myGame.delta;
 }
 
 BadBird.prototype.moveR = function(){
   this.moveD();
-  if (this.canMoveR())this.x += this.speed/1000*delta;
+  if (this.canMoveR())this.x += this.speed/1000*myGame.delta;
   else this.directionR = false;
 }
+
 BadBird.prototype.moveL = function(){
   this.moveD();
-  if (this.canMoveL())this.x -= this.speed/1000*delta;
+  if (this.canMoveL())this.x -= this.speed/1000*myGame.delta;
   else this.directionR = true;
 }
+
 BadBird.prototype.canMoveR = function(){  
   return (this.x >= 385) ? false : true;
 }
+
 BadBird.prototype.canMoveL = function(){  
   return (this.x <= 60) ? false : true;
 }
 
-
-// BadBird.prototype.dead = function(){
-//   this.alive = false;
-// }
-
-// BadBird.prototype.collision = function(x,y){
-//   this.dead();  
-// }
-
 BadBird.prototype.render = function(){
+  this.move();
   if (!this.alive) {
     this.imgBadBird.src = '';
     console.log('badguy dead');
   }
-  ctx.drawImage(this.imgBadBird, this.x, this.y, this.width , this.height);
+  myGame.ctx.drawImage(this.imgBadBird, this.x, this.y, this.width , this.height);
 }

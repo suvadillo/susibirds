@@ -1,7 +1,3 @@
-// var imgRocket = new Image();   
-// imgRocket.src = 'images/rocket.png';
-// var scale = 75/178;
-
 function Rocket(speedY,x,y){
   this.posX = x;
   this.posY = y;
@@ -27,10 +23,10 @@ Rocket.prototype.collision = function(arr){
   }
 }
 
-Rocket.prototype.render = function(delta){
-  this.posY += this.speedY/1000*delta;
+Rocket.prototype.render = function(){
+  this.posY += this.speedY/1000*myGame.delta;
   if (this.posY < -100) {
   this.posY = 800;
   } 
-  ctx.drawImage(this.imgRocket, this.posX, this.posY, this.width, this.height);
+  myGame.ctx.drawImage(this.imgRocket, this.posX, this.posY, this.width, this.height);
 }
