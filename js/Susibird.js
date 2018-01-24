@@ -1,26 +1,14 @@
-// BIRDS IMAGES
-// var imgBird1 = new Image();   
-// imgBird1.src = 'images/susiBird.png';
-// var imgScale = 100/161;
-
-// var imgExplosion = 'images/explosion01.png';
-// var imgExplScale = 1;
-
-// this.images = [imgBird1,2] CAMBIA ESTO!!!!!!!!
-
-function FlyingBird(maxSpeedX,x,y,i){
+function FlyingBird(maxSpeedX,x,y){
   this.maxSpeedX = maxSpeedX;
   this.posX = x;
   this.posY = y;
-  this.imgBird = new Image();
-  this.indexImgArr = i;
-  this.imgArr = [
-    {src: 'images/susiBird.png', scale: 100/161, resize: 110},
-    {src: 'images/explosion01.png', scale: 1, resize: 80}];
-  this.imgBird.src = this.imgArr[i].src;
-  this.imgScale = this.imgArr[i].scale;
-  this.width = this.imgArr[i].resize*this.imgScale;
-  this.height = this.imgArr[i].resize;
+  this.imgs = [new Image(),new Image()];
+  this.imgs[0].src = 'images/susiBird.png';
+  this.imgs[1].src = 'images/explosion01.png';
+  this.imgsScales = [100/161, 1];
+  this.imgsResize = [110,110];
+  this.width = this.imgsScales[0]*this.imgsResize[0];
+  this.height = this.imgsResize[0];
   this.speedX = 0;
   this.speedY = 0;
   this.lifes = 3;
@@ -50,7 +38,7 @@ FlyingBird.prototype.stop = function(){
 }
 
 FlyingBird.prototype.dead = function(){
-  this.alive = false;
+  //this.alive = false;
   this.lifes--;
   // AÑADIR EFECTO DE QUE EL PAJARO DESAPARECE ???
 }
@@ -59,25 +47,21 @@ FlyingBird.prototype.collision = function(){
   this.width = 0;
   this.height = 0; 
   this.dead();  
+  this.renderCollision();
+}
+
+FlyingBird.prototype.renderCollision = function(delta){
+  ctx.drawImage(this.imgs[1], this.posX, this.posY,this.imgsScales[1]*this.imgsResize[1], this.imgsResize[1]);
 }
 
 FlyingBird.prototype.render = function(delta){
   this.posY += this.speedY/1000*delta;
   this.posX += this.speedX/1000*delta;
-  if (!this.alive) {
-    //explosion(this.posX, this.posY);
-    this.imgBird.src = 'images/explosion01.png';
-    this.imgScale = 1;
-    this.width = 80;
-    this.height = 80;
-    console.log(this.imgBird.src);
-    ctx.drawImage(this.imgBird, this.posX, this.posY, 0, 0);  
-  }
-  ctx.drawImage(this.imgBird, this.posX, this.posY, this.width, this.height);
+  ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
 }
 
-// function explosion (x,y) {
-//   var explosion = new FlyingBird (0,x,y,1);
-//   console.log(explosion.imgBird.src);
-//   ctx.drawImage(explosion.imgBird, explosion.posX, explosion.posY, explosion.width, explosion.height);
-// }
+FlyingBird.prototype.revive = function() {
+  //this.alive = true;
+  console.log(myGame.susiBird1);
+  ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
+}

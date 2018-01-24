@@ -23,7 +23,7 @@ Background.prototype.renderScore = function(numLifes, score){
   var txtLifes ="Lifes: " + numLifes;
   ctx.fillText(txtLifes,80,50);
   var txtScore ="Score: " + score;
-  ctx.fillText(txtScore,350,50);
+  ctx.fillText(txtScore,300,50);
 }
 
 Background.prototype.stop = function() {

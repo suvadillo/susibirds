@@ -5,6 +5,9 @@ function Game(){
   this.arrRockets = [];
   this.numberOfRockets = 8;
   this.susiBird1;
+  this.susiBird2;
+  // this.susiBird3;
+  // this.susiBirds = [];
   this.badGuy;
   this.isGameRunning = true;
 }
@@ -17,9 +20,9 @@ Game.prototype.startGame = function() {
   this.background1 = new Background();
   this.susiBird1 = new FlyingBird(50,250,250,0);
   this.createArrRockets(this.numberOfRockets);
-  this.badGuy = new BadBird(10,10,60,0,0);
+  this.badGuy = new BadBird(10,60,0,0);
+  // this.reverseBadGuy = new BadBird(-10,385,-850,0);
 }
-
 
 Game.prototype.createArrRockets = function(numRockets){
   for (var i = 0; i < numRockets; i++) {
@@ -30,4 +33,8 @@ Game.prototype.createArrRockets = function(numRockets){
     var rocket = new Rocket(x,y,z)
     this.arrRockets.push(rocket);
   }
+}
+
+Game.prototype.createSusiBird = function() {
+  this.susiBird2 = new FlyingBird(50,250,250,0);
 }

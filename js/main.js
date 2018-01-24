@@ -5,39 +5,48 @@ var then = 0;
 
 var cv = document.getElementById('canvas');
 var ctx = cv.getContext('2d');
-// **INSTANCIAR TODOS LOS OBJETOS
-//var background1 = new Background();
-// var susiBird1 = new FlyingBird(100,250,250,0);
-// var arrRockets  = []
-// var badGuy = new BadBird(10,10,60,0,0);
 
 var myGame = new Game;
 myGame.startGame();
+function restartGame() {
+  myGame = new Game;
+      // myGame.isGameRunning = true;
+      // myGame.susiBird1.revive();
+}
 
 function CheckCollision() {
   for (var i = 0; i < myGame.arrRockets.length; i ++) {
     if (myGame.arrRockets[i].posX < myGame.susiBird1.posX + myGame.susiBird1.width && myGame.arrRockets[i].posX + myGame.arrRockets[i].width  > myGame.susiBird1.posX &&
       myGame.arrRockets[i].posY < myGame.susiBird1.posY + myGame.susiBird1.height && myGame.arrRockets[i].posY + myGame.arrRockets[i].height > myGame.susiBird1.posY) {
-      // The objects are touching
+
+      // Rockets touching susiBird
       myGame.susiBird1.collision();
-      myGame.arrRockets[i].collision(myGame.arrRockets);
-      myGame.background1.stop();
+      myGame.isGameRunning = false;
+
+    } else if (myGame.badGuy.x < myGame.susiBird1.posX + myGame.susiBird1.width-50 && myGame.badGuy.x +  myGame.badGuy.width-25  > myGame.susiBird1.posX &&
+      myGame.badGuy.y < myGame.susiBird1.posY + myGame.susiBird1.height-80 && myGame.badGuy.y + myGame.badGuy.height-30 > myGame.susiBird1.posY) {
+
+      // BAD GUY TOUCHING SUSIBIRD
+      myGame.susiBird1.collision();
       myGame.isGameRunning = false;
 
     } else {
       myGame.susiBird1.render(delta);
       myGame.arrRockets[i].render(delta);
-      myGame.badGuy.move(1,1);
+      if(myGame.badGuy.directionR) myGame.badGuy.moveR();
+      else myGame.badGuy.moveL();
       myGame.badGuy.render(delta);
-    }
+     }
   }
 }
 
 function birdDies() {
   ctx.clearRect(0,0,cv.width,cv.height);
+  myGame.background1.stop();
   myGame.background1.render(delta);
   myGame.background1.renderScore(myGame.susiBird1.lifes,myGame.score);
 }
+
 
 function update(){
   then = now;
@@ -48,13 +57,15 @@ function update(){
 
   // RENDER BACKGROUND AND SCORE LABELS
   myGame.background1.render(delta);
+  myGame.score++;
   myGame.background1.renderScore(myGame.susiBird1.lifes,myGame.score);
 
   CheckCollision();
 }
 
 function updateWhenBirdDies(){
-  setTimeout(birdDies,3000);  
+  // setTimeout(birdDies,2000);
+  setTimeout(restartGame,1000); 
 }
 
 var render = function(){
@@ -85,15 +96,3 @@ window.addEventListener('keydown', function(e){
 window.addEventListener('keyup', function(e){
   myGame.susiBird1.stop();
 });
-// function createArrRockets(numRockets){
-//   for (var i = 0; i < numRockets; i++) {
-//     var x,y,z;
-//     if (i % 2 === 0) {x = -200;} else {x = -250;}
-//     y = (Math.floor(Math.random()*5)*75)+100;
-//     z = (Math.floor(Math.random()*3)*300)+800;
-//     var rocket = new Rocket(x,y,z)
-//     arrRockets.push(rocket);
-//   }
-// }
-// createArrRockets(8)
-// console.log(myGame.arrRockets)
