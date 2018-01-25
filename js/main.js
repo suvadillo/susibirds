@@ -49,6 +49,15 @@ window.addEventListener("keyup", function(e) {
   }
 });
 
+document.addEventListener("click", onMouseClick, false);
+
+function onMouseClick(e) {
+  myGame.ctx.clearRect(0, 0, myGame.cv.width, myGame.cv.height);
+  myGame.arrBadGuys = [];
+  myGame.arrRockets = [];
+  myGame.startGame();
+}
+
 var render = function() {
   myGame.then = myGame.now;
   myGame.now = Date.now();
