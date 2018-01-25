@@ -7,6 +7,10 @@ function Background() {
   this.numLoops = 0;
   this.imgBgLevel1 = new Image();
   this.imgBgLevel1.src = 'images/bg-level1.jpg';
+  this.imgScore = new Image();
+  this.imgScore.src = 'images/score-board.png';
+  this.imgScoreWidth = 150;
+  this.imgScoreHeight = 83;
 }
 
 Background.prototype.render = function(){
@@ -22,11 +26,13 @@ Background.prototype.render = function(){
 }
 
 Background.prototype.renderScore = function(numLifes, score){
+  myGame.ctx.drawImage(this.imgScore, 65, 5, this.imgScoreWidth, this.imgScoreHeight);
   myGame.ctx.font = "24px Arial";
   var txtLifes ="Lifes: " + numLifes;
-  myGame.ctx.fillText(txtLifes,80,50);
+  myGame.ctx.fillText(txtLifes,95,65);
+  myGame.ctx.drawImage(this.imgScore, 300, 5, this.imgScoreWidth, this.imgScoreHeight);
   var txtScore ="Score: " + score;
-  myGame.ctx.fillText(txtScore,300,50);
+  myGame.ctx.fillText(txtScore,315,65);
 }
 
 Background.prototype.stop = function() {

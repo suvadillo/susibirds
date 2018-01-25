@@ -3,9 +3,12 @@ function FlyingBird(maxSpeedX,x,y){
   this.maxSpeedY = 50;
   this.posX = x;
   this.posY = y;
-  this.imgs = [new Image(),new Image()];
+  this.imgs = [new Image(),new Image(),new Image(),new Image(),new Image()];
   this.imgs[0].src = 'images/susiBird.png';
   this.imgs[1].src = 'images/explosion01.png';
+  this.imgs[2].src = 'images/susiBird2Balloons.png';
+  this.imgs[3].src = 'images/susiBird1Balloon.png';
+  this.imgs[4].src = 'images/susiBird0Balloons.png';
   this.imgsScales = [100/161, 1];
   this.imgsResize = [110,110];
   this.width = this.imgsScales[0]*this.imgsResize[0];
