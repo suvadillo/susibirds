@@ -23,7 +23,7 @@ Rocket.prototype.collision = function(arr){
   }
 }
 
-Rocket.prototype.render = function(){
+Rocket.prototype.renderRocket = function(){
   this.posY += this.speedY/1000*myGame.delta;
   if (this.posY < -100) {
   this.posY = 800;

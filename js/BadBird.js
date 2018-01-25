@@ -4,13 +4,11 @@ function BadBird(speed, x, y, i){
   this.y = y;
   this.imgBadBird = new Image();
   this.indexImgArr = i;
-  this.imgArr = [
-    {src: 'images/badBird.png', scale: 187/100, resize: 50}];
+  this.imgArr = [{src: 'images/badBird.png', scale: 187/100, resize: 50}];
   this.imgBadBird.src = this.imgArr[i].src;
   this.imgScale = this.imgArr[i].scale;
   this.width = this.imgArr[i].resize*this.imgScale;
   this.height = this.imgArr[i].resize;
-  this.alive = true;
   this.directionR = true;
 }
 

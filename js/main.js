@@ -1,86 +1,57 @@
-var myGame = new Game;
+var myGame = new Game();
 myGame.startGame();
 
-function restartGame() {
-  myGame = new Game;
-}
-
-function CheckCollision() {
-  for (var i = 0; i < myGame.arrRockets.length; i ++) {
-    if ((myGame.arrRockets[i].posX < myGame.susiBird1.posX + myGame.susiBird1.width && myGame.arrRockets[i].posX + myGame.arrRockets[i].width  > myGame.susiBird1.posX && myGame.arrRockets[i].posY < myGame.susiBird1.posY + myGame.susiBird1.height && myGame.arrRockets[i].posY + myGame.arrRockets[i].height > myGame.susiBird1.posY) || (myGame.badGuy.x < myGame.susiBird1.posX + myGame.susiBird1.width-50 && myGame.badGuy.x +  myGame.badGuy.width-25  > myGame.susiBird1.posX && myGame.badGuy.y < myGame.susiBird1.posY + myGame.susiBird1.height-80 && myGame.badGuy.y + myGame.badGuy.height-30 > myGame.susiBird1.posY)) {
-
-      myGame.susiBird1.collision();
-      myGame.isGameRunning = false;
-
-    } else {
-      myGame.susiBird1.render();
-      myGame.arrRockets[i].render();
-      myGame.badGuy.render();
-     }
-  }
-}
-
-function resume() {
-  // myGame.isGameRunning = true;
-  // stopAnimationFrame(x);
-  // stopAnimationFrame(y);
-  //render();
-  myGame.susiBird1.render();  
-  myGame.arrRockets.forEach(render);
-  myGame.badGuy.render();
-}
-
-function birdDies() {
-  myGame.ctx.clearRect(0,0,myGame.cv.width,myGame.cv.height);
+function update() {
   myGame.background1.render();
-  myGame.background1.renderScore(myGame.susiBird1.lifes,myGame.score);
+  myGame.susiBird1.render();
+  myGame.arrRockets.forEach(function(rockets) {
+    rockets.renderRocket();
+  });
+  myGame.checkCollision();
+  myGame.background1.renderScore(myGame.susiBird1.lifes, myGame.score);
 }
 
-function update(){
+window.addEventListener("keydown", function(e) {
+  switch (e.keyCode) {
+    case 37: // left
+      myGame.susiBird1.direction[0] = true;
+      break;
+    case 39: // right
+      myGame.susiBird1.direction[1] = true;
+      break;
+    case 38: // up
+      myGame.susiBird1.direction[2] = true;
+      break;
+    case 40: // down
+      myGame.susiBird1.direction[3]= true;
+      break;
+  }
+  console.log(myGame.susiBird1.direction)
+});
+
+window.addEventListener("keyup", function(e) {
+  switch (e.keyCode) {
+    case 37: // left
+      myGame.susiBird1.direction[0] = false;
+      break;
+    case 39: // right
+      myGame.susiBird1.direction[1] = false;
+      break;
+    case 38: // up
+      myGame.susiBird1.direction[2] = false;
+      break;
+    case 40: // down
+      myGame.susiBird1.direction[3]= false;
+      break;
+  }
+});
+
+var render = function() {
   myGame.then = myGame.now;
   myGame.now = Date.now();
   myGame.delta = myGame.now - myGame.then;
-  
-  myGame.ctx.clearRect(0,0,myGame.cv.width,myGame.cv.height);
-  myGame.background1.render();
-  myGame.score++;
-  myGame.background1.renderScore(myGame.susiBird1.lifes,myGame.score);
-
-  CheckCollision();
-}
-
-var render = function(){
-  if(myGame.isGameRunning==true){
-    update();
-  }
-  else if(myGame.isGameRunning==false){
-    setTimeout(birdDies,1000);
-    setTimeout(resume,1000);
-  }
+  myGame.ctx.clearRect(0, 0, myGame.cv.width, myGame.cv.height);
+  update();
   window.requestAnimationFrame(render);
 };
 window.requestAnimationFrame(render);
-
-window.addEventListener('keydown', function(e){
-  switch(e.keyCode){
-      case 37: // left
-        myGame.susiBird1.moveX(-1);        
-      break;
-
-      case 38: // up
-        myGame.susiBird1.moveY(-1);        
-      break;
-
-      case 39: // right
-        myGame.susiBird1.moveX(1);
-      break;
-
-      case 40: // down
-        myGame.susiBird1.moveY(1);
-      break;
-  }
-});
-
-window.addEventListener('keyup', function(e){
-  myGame.susiBird1.stop();
-});

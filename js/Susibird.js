@@ -1,6 +1,5 @@
-function FlyingBird(maxSpeedX,x,y){
-  this.maxSpeedX = maxSpeedX;
-  this.maxSpeedY = 50;
+function FlyingBird(speed,x,y){
+  this.speed = speed;
   this.posX = x;
   this.posY = y;
   this.imgs = [new Image(),new Image(),new Image(),new Image(),new Image()];
@@ -13,57 +12,42 @@ function FlyingBird(maxSpeedX,x,y){
   this.imgsResize = [110,110];
   this.width = this.imgsScales[0]*this.imgsResize[0];
   this.height = this.imgsResize[0];
-  this.speedX = 0;
-  this.speedY = 0;
-  this.lifes = 3;
-  this.health = 1;
-  this.alive = true;
+  this.direction = [false,false,false,false]
 }
 
-FlyingBird.prototype.moveX = function(direction){
-  if (this.posX < 60) {
-    this.speedX = 0;
-    this.posX = 60;
-  } else if (this.posX > 385) {
-    this.speedX = 0;
-    this.posX = 385;
-  } else {
-    this.speedX = this.maxSpeedX * direction;
-  }
+FlyingBird.prototype.moveLeft = function(){
+  if(this.canMoveLeft()) this.posX -= this.speed;
+}
+FlyingBird.prototype.moveRight = function(){
+  if(this.canMoveRight()) this.posX += this.speed;
+}
+FlyingBird.prototype.moveUp = function(){
+  if(this.canMoveUp()) this.posY -= this.speed;
+}
+FlyingBird.prototype.moveDown = function(){
+  if(this.canMoveDown()) this.posY += this.speed;
+}
+FlyingBird.prototype.canMoveLeft = function(){
+ return (this.posX <= 60) ? false : true;
+}
+FlyingBird.prototype.canMoveRight = function(){
+  return (this.posX >= 385) ? false : true;
+}
+FlyingBird.prototype.canMoveUp = function(){
+  return (this.posY <= 90) ? false : true;
+}
+FlyingBird.prototype.canMoveDown = function(){
+  return (this.posY >= 690) ? false : true;
 }
 
-FlyingBird.prototype.moveY = function(direction){
-  if (this.posY < 0) {
-    this.speedY = 0;
-  } else if (this.posY > 800) {
-    this.speedY = 0;
-  } else {
-    this.speedY = this.maxSpeedY * direction;
-  }
-}
-
-FlyingBird.prototype.stop = function(){
-  this.speedX = 0;
-  this.speedY = 0;
-}
-
-FlyingBird.prototype.collision = function(){
-  this.lifes--; 
-  this.renderCollision();
-}
-
-FlyingBird.prototype.renderCollision = function(){
-  myGame.ctx.drawImage(this.imgs[1], this.posX, this.posY,this.imgsScales[1]*this.imgsResize[1], this.imgsResize[1]);
+FlyingBird.prototype.move = function(){
+  if(this.direction[0])this.moveLeft();
+  if(this.direction[1])this.moveRight();
+  if(this.direction[2])this.moveUp();
+  if(this.direction[3])this.moveDown();
 }
 
 FlyingBird.prototype.render = function(){
-  this.posY += this.speedY/1000*myGame.delta;
-  this.posX += this.speedX/1000*myGame.delta;
-  myGame.ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
-}
-
-FlyingBird.prototype.revive = function() {
-  //this.alive = true;
-  console.log(myGame.susiBird1);
+  this.move();
   myGame.ctx.drawImage(this.imgs[0], this.posX, this.posY, this.width, this.height);
 }

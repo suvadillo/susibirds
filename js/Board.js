@@ -31,7 +31,7 @@ Background.prototype.renderScore = function(numLifes, score){
   var txtLifes ="Lifes: " + numLifes;
   myGame.ctx.fillText(txtLifes,95,65);
   myGame.ctx.drawImage(this.imgScore, 300, 5, this.imgScoreWidth, this.imgScoreHeight);
-  var txtScore ="Score: " + score;
+  var txtScore ="Score: " + parseInt(score);
   myGame.ctx.fillText(txtScore,315,65);
 }
 
