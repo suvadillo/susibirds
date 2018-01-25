@@ -44,9 +44,5 @@ BadBird.prototype.canMoveL = function(){
 
 BadBird.prototype.render = function(){
   this.move();
-  if (!this.alive) {
-    this.imgBadBird.src = '';
-    console.log('badguy dead');
-  }
   myGame.ctx.drawImage(this.imgBadBird, this.x, this.y, this.width , this.height);
 }

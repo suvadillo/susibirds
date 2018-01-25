@@ -12,7 +12,8 @@ function FlyingBird(speed,x,y){
   this.imgsResize = [110,110];
   this.width = this.imgsScales[0]*this.imgsResize[0];
   this.height = this.imgsResize[0];
-  this.direction = [false,false,false,false]
+  this.direction = [false,false,false,false];
+  this.lifes = 5;
 }
 
 FlyingBird.prototype.moveLeft = function(){

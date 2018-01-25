@@ -7,6 +7,7 @@ function update() {
   myGame.arrRockets.forEach(function(rockets) {
     rockets.renderRocket();
   });
+  myGame.badGuy.render();
   myGame.checkCollision();
   myGame.background1.renderScore(myGame.susiBird1.lifes, myGame.score);
 }
