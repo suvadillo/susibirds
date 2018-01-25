@@ -8,5 +8,5 @@ function Explosion(){
 }
 
 Explosion.prototype.renderExplosion = function (x,y) {
-  myGame.ctx.drawImage(this.imgExpl, x-this.width/2, y-this.height/2+10, this.width, this.height);
+  myGame.ctx.drawImage(this.imgExpl, x-this.width/2+10, y-this.height/2+10, this.width, this.height);
 }

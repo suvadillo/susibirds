@@ -18,7 +18,7 @@ BadBird.prototype.move = function() {
 }
 
 BadBird.prototype.moveD = function() {
-  if (this.y >= 1700) this.y = 0;
+  if (this.y >= 800) this.y = 0;
   this.y += this.speed/1000*myGame.delta;
 }
 

@@ -29,10 +29,18 @@ Background.prototype.renderScore = function(numLifes, score){
   myGame.ctx.drawImage(this.imgScore, 65, 5, this.imgScoreWidth, this.imgScoreHeight);
   myGame.ctx.font = "24px Arial";
   var txtLifes ="Lifes: " + numLifes;
-  myGame.ctx.fillText(txtLifes,95,65);
+  myGame.ctx.fillText(txtLifes,100,65);
   myGame.ctx.drawImage(this.imgScore, 300, 5, this.imgScoreWidth, this.imgScoreHeight);
   var txtScore ="Score: " + parseInt(score);
   myGame.ctx.fillText(txtScore,315,65);
+}
+
+Background.prototype.renderGameOver = function(){
+  myGame.ctx.font = "100px Arial";
+  var txtGame ="GAME";
+  myGame.ctx.fillText(txtGame,118,350);
+  var txtScore ="OVER";
+  myGame.ctx.fillText(txtScore,120,450);
 }
 
 Background.prototype.stop = function() {

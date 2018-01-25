@@ -9,10 +9,20 @@ function Game(){
   this.level = 1;
   this.background1;
   this.arrRockets = [];
-  this.numberOfRockets = 8;
-  this.susiBird1;
   this.badGuy;
+  this.badGuy2;
+  this.arrBadGuys = [];
+  this.numberOfRockets = 8;
+  this.numberOfBadGuys = 2;
+  this.susiBird1;
   this.arrExpl = [];
+
+  // this.gameAudio = new Audio();
+  // this.gameAudio.src = '/audio/wind.mp3';
+  // this.rocketsAudio = new Audio();
+  // this.rocketsAudio.src = '/audio/tracer.wav';
+  // this.explosionAudio = new Audio();
+  // this.explosionAudio.src = '/audio/explosion.wav';
 }
 
 Game.prototype.startGame = function() {
@@ -20,6 +30,9 @@ Game.prototype.startGame = function() {
   this.susiBird1 = new FlyingBird(10,250,250,0);
   this.createArrRockets(this.numberOfRockets);
   this.badGuy = new BadBird(100,80,0,0);
+  this.badGuy2 = new BadBird(100,400,432,0);
+  this.arrBadGuys.push(this.badGuy);
+  this.arrBadGuys.push(this.badGuy2);
 }
 
 Game.prototype.createArrRockets = function(numRockets){
@@ -38,26 +51,50 @@ Game.prototype.createSusiBird = function() {
 }
 
 Game.prototype.checkCollision = function () {
-  for (var i = 0; i < myGame.arrRockets.length; i++) {
-    if (this.arrRockets[i].posX < this.susiBird1.posX + this.susiBird1.width &&
-      this.arrRockets[i].posX + this.arrRockets[i].width > this.susiBird1.posX &&
-      this.arrRockets[i].posY < this.susiBird1.posY + this.susiBird1.height &&
-      this.arrRockets[i].posY + this.arrRockets[i].height > this.susiBird1.posY) {
-        console.log("Colisión rocket");
-        this.createExplosion(this.arrRockets[i].posX ,this.arrRockets[i].posY, 500);
-        this.arrRockets[i].posY = -80;
-        this.score++;
+  if (myGame.susiBird1.lifes <= 0) {
+    this.susiBird1.img = this.susiBird1.imgs[3];
+    this.susiBird1.moveDown();
+    myGame.background1.renderGameOver();
+  } else {
+    for (var i = 0; i < myGame.arrRockets.length; i++) {
+      if (this.arrRockets[i].posX < this.susiBird1.posX + this.susiBird1.width &&
+        this.arrRockets[i].posX + this.arrRockets[i].width > this.susiBird1.posX &&
+        this.arrRockets[i].posY < this.susiBird1.posY + this.susiBird1.height &&
+        this.arrRockets[i].posY + this.arrRockets[i].height > this.susiBird1.posY) {
+          console.log("Colisión rocket");
 
+          // this.rocketsAudio.play();
 
-    } else if (this.badGuy.x < this.susiBird1.posX + this.susiBird1.width - 50 &&
-      this.badGuy.x + this.badGuy.width - 25 > this.susiBird1.posX &&
-      this.badGuy.y < this.susiBird1.posY + this.susiBird1.height - 80 &&
-      this.badGuy.y + this.badGuy.height - 30 > this.susiBird1.posY) {
-        console.log("Colisión bad guy");
-        this.createExplosion(this.badGuy.x ,this.badGuy.y, 1500);
-        this.susiBird1.lifes--;
-        this.badGuy.y = 850;
+          //this.createExplosion(this.arrRockets[i].posX ,this.arrRockets[i].posY, 500);
+          this.arrRockets[i].posY = -80;
+          this.score++;
+      } 
     }
+    for (var i = 0; i < myGame.arrBadGuys.length; i++) {
+      if (this.arrBadGuys[i].x < this.susiBird1.posX + this.susiBird1.width &&
+        this.arrBadGuys[i].x + this.arrBadGuys[i].width > this.susiBird1.posX &&
+        this.arrBadGuys[i].y < this.susiBird1.posY + this.susiBird1.height &&
+        this.arrBadGuys[i].y + this.arrBadGuys[i].height > this.susiBird1.posY) {
+          console.log("Colisión bad guy");
+
+          // this.explosionAudio.play();
+
+          this.createExplosion(this.arrBadGuys[i].x ,this.arrBadGuys[i].y, 5000);
+          this.susiBird1.lifes--;
+          switch (this.susiBird1.lifes) {
+            case 2:
+            this.susiBird1.img = this.susiBird1.imgs[1];
+            break;
+            case 1:
+            this.susiBird1.img = this.susiBird1.imgs[2];
+            break;
+            default:
+            this.susiBird1.img = this.susiBird1.imgs[0];
+            break;
+          }
+          this.arrBadGuys[i].y = -50;
+      }
+    } 
   }
 }
 
@@ -66,7 +103,6 @@ Game.prototype.createExplosion = function(x,y,time) {
   this.arrExpl.push(tempExpl);
   tempExpl.renderExplosion(x,y);
   setTimeout(function(){
-    console.log(time)
     if(this.arrExpl)this.arrExpl.pop()
   },time);
 }

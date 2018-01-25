@@ -7,7 +7,10 @@ function update() {
   myGame.arrRockets.forEach(function(rockets) {
     rockets.renderRocket();
   });
-  myGame.badGuy.render();
+  myGame.arrBadGuys.forEach(function(badGuys) {
+    badGuys.render();
+  })
+  //myGame.badGuy.render();
   myGame.checkCollision();
   myGame.background1.renderScore(myGame.susiBird1.lifes, myGame.score);
 }
@@ -27,7 +30,6 @@ window.addEventListener("keydown", function(e) {
       myGame.susiBird1.direction[3]= true;
       break;
   }
-  console.log(myGame.susiBird1.direction)
 });
 
 window.addEventListener("keyup", function(e) {

@@ -84,3 +84,15 @@ window.addEventListener('keydown', function(e){
 window.addEventListener('keyup', function(e){
   myGame.susiBird1.stop();
 });
+
+
+Game.prototype.createBadGuys = function(numberOfBadGuys){
+  for (var i = 0; i < numberOfBadGuys; i++) {
+    var x,y,z;
+    if (i % 2 === 0) {x = -200;} else {x = -250;}
+    y = (Math.floor(Math.random()*5)*75)+100;
+    z = (Math.floor(Math.random()*3)*300)+800;
+    var badGuy = new BadBird(100,y,z,0)
+    this.arrBadGuys.push(badGuy);
+  }
+}
