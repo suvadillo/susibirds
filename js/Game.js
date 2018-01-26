@@ -17,12 +17,13 @@ function Game(){
   this.susiBird1;
   this.arrExpl = [];
 
-  // this.gameAudio = new Audio();
-  // this.gameAudio.src = '/audio/wind.mp3';
-  // this.rocketsAudio = new Audio();
-  // this.rocketsAudio.src = '/audio/tracer.wav';
-  // this.explosionAudio = new Audio();
-  // this.explosionAudio.src = '/audio/explosion.wav';
+  this.gameAudio = new Audio();
+  this.gameAudio.src = 'audio/wind.mp3';
+  this.gameAudio.loop = true;
+  this.rocketsAudio = new Audio();
+  this.rocketsAudio.src = 'audio/tracer.wav';
+  this.explosionAudio = new Audio();
+  this.explosionAudio.src = 'audio/explosion.wav';
 }
 
 Game.prototype.startGame = function() {
@@ -33,6 +34,7 @@ Game.prototype.startGame = function() {
   this.badGuy2 = new BadBird(100,400,0,0);
   this.arrBadGuys.push(this.badGuy);
   this.arrBadGuys.push(this.badGuy2);
+  this.gameAudio.play();
 }
 
 Game.prototype.createArrRockets = function(numRockets){
@@ -61,11 +63,8 @@ Game.prototype.checkCollision = function () {
         this.arrRockets[i].posX + this.arrRockets[i].width > this.susiBird1.posX &&
         this.arrRockets[i].posY < this.susiBird1.posY + this.susiBird1.height &&
         this.arrRockets[i].posY + this.arrRockets[i].height > this.susiBird1.posY) {
-          console.log("Colisión rocket");
 
-          // this.rocketsAudio.play();
-
-          //this.createExplosion(this.arrRockets[i].posX ,this.arrRockets[i].posY, 500);
+          this.rocketsAudio.play();
           this.arrRockets[i].posY = -80;
           this.score++;
       } 
@@ -75,9 +74,8 @@ Game.prototype.checkCollision = function () {
         this.arrBadGuys[i].x + this.arrBadGuys[i].width > this.susiBird1.posX &&
         this.arrBadGuys[i].y < this.susiBird1.posY + this.susiBird1.height &&
         this.arrBadGuys[i].y + this.arrBadGuys[i].height > this.susiBird1.posY) {
-          console.log("Colisión bad guy");
 
-          // this.explosionAudio.play();
+          this.explosionAudio.play();
 
           this.createExplosion(this.arrBadGuys[i].x ,this.arrBadGuys[i].y, 5000);
           this.susiBird1.lifes--;
