@@ -29,8 +29,8 @@ Game.prototype.startGame = function() {
   this.background1 = new Background();
   this.susiBird1 = new FlyingBird(10,250,250,0);
   this.createArrRockets(this.numberOfRockets);
-  this.badGuy = new BadBird(100,80,0,0);
-  this.badGuy2 = new BadBird(100,400,432,0);
+  this.badGuy = new BadBird(100,80,-432,0);
+  this.badGuy2 = new BadBird(100,400,0,0);
   this.arrBadGuys.push(this.badGuy);
   this.arrBadGuys.push(this.badGuy2);
 }
@@ -54,7 +54,7 @@ Game.prototype.checkCollision = function () {
   if (myGame.susiBird1.lifes <= 0) {
     this.susiBird1.img = this.susiBird1.imgs[3];
     this.susiBird1.moveDown();
-    myGame.background1.renderGameOver();
+    setTimeout(myGame.background1.renderGameOver(),4000);
   } else {
     for (var i = 0; i < myGame.arrRockets.length; i++) {
       if (this.arrRockets[i].posX < this.susiBird1.posX + this.susiBird1.width &&

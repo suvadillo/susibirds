@@ -3,10 +3,10 @@ function Background() {
   this.x = 0;
   this.y = 0;
   this.width = 512;
-  this.height = 809;
+  this.height = 800;
   this.numLoops = 0;
   this.imgBgLevel1 = new Image();
-  this.imgBgLevel1.src = 'images/bg-level1.jpg';
+  this.imgBgLevel1.src = 'images/bg-level-800.jpg';
   this.imgScore = new Image();
   this.imgScore.src = 'images/score-board.png';
   this.imgScoreWidth = 150;
@@ -19,11 +19,11 @@ function Background() {
 
 Background.prototype.render = function(){
   if (this.y < -800) { 
-    this.y = 9;
+    this.y = 0;
     this.numLoops++;
   }
-  if (this.y < 9) {
-    myGame.ctx.drawImage(this.imgBgLevel1, this.x , this.y + this.height - 1, this.width, this.height); 
+  if (this.y < 0) {
+    myGame.ctx.drawImage(this.imgBgLevel1, this.x , this.y + this.height, this.width, this.height); 
   }
   myGame.ctx.drawImage(this.imgBgLevel1, this.x, this.y, this.width, this.height);  
   this.y += this.speed;

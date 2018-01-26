@@ -9,9 +9,22 @@
   <title>Document</title>
 </head>
 <body>
-  <section id="canvas-container">
-    <canvas id="canvas" width="512" height="800"></canvas>
-  </section>
+  <div class="container">
+    <section class="game-intro">
+      <!-- <img src="./images/susibirds-logo.png" alt="" class="logo-img"> -->
+      <br>
+      <button id="start-button" onclick="loadGame()">Start<br>Game</button>      
+    </section>
+
+    <section id="canvas-container" class="canvas-container">
+      <canvas id="canvas" width="512" height="800"></canvas>
+    </section>
+
+    <section class="white">
+      <h2>Use the arrow keys to control the movements</h2>
+      <img src="./images/arrows.svg" alt="keyboard arrows" class="arrows-img">
+    </section>
+  </div>
 
   <script src="js/Susibird.js"></script>
   <script src="js/Rockets.js"></script>
